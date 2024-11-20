@@ -1,4 +1,4 @@
-output "all_public_ips" {
+output "public_ip" {
   value = azurerm_public_ip.pip-terraform.ip_address
 }
 
@@ -12,4 +12,8 @@ output "nic_id" {
 
 output "sub_db_id" {
   value = azurerm_subnet.sub-db.id
+}
+
+output "sub_waf_id" {
+  value = azurerm_subnet.sub-waf.id
 }

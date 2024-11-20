@@ -43,6 +43,13 @@ resource "azurerm_subnet" "sub-files" {
   address_prefixes     = var.sub_files_cidr
 }
 
+resource "azurerm_subnet" "sub-waf" {
+  name                 = var.sub_waf_name
+  resource_group_name  = var.rg_name
+  virtual_network_name = azurerm_virtual_network.vnet-terraform.name
+  address_prefixes     = var.sub_waf_cidr
+}
+
 resource "azurerm_public_ip" "pip-terraform" {
   name                = var.pip_name
   resource_group_name = var.rg_name
@@ -82,10 +89,20 @@ resource "azurerm_network_security_group" "nsg-terraform" {
       access                     = security_rule.value.access
       protocol                   = security_rule.value.protocol
       source_port_range          = security_rule.value.source_port_range
-      destination_port_range     = security_rule.value.destination_port_range
+      destination_port_ranges    = security_rule.value.destination_port_ranges
       source_address_prefix      = security_rule.value.source_address_prefix
       destination_address_prefix = security_rule.value.destination_address_prefix
     }
   }
 
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg-associate" {
+  for_each = {
+    vms = azurerm_subnet.sub-vms.id
+    db  = azurerm_subnet.sub-db.id
+  }
+
+  subnet_id                 = each.value
+  network_security_group_id = azurerm_network_security_group.nsg-terraform.id
 }

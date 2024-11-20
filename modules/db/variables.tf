@@ -24,3 +24,7 @@ variable "sub_db_id" {
 variable "pv_dns_id" {
   type = string
 }
+
+variable "db-password" {
+  type = string
+}

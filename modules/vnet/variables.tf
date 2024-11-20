@@ -38,6 +38,14 @@ variable "sub_files_cidr" {
   type = list(string)
 }
 
+variable "sub_waf_name" {
+  type = string
+}
+
+variable "sub_waf_cidr" {
+  type = list(string)
+}
+
 variable "pip_name" {
   type = string
 }
@@ -60,7 +68,7 @@ variable "nsg_rules" {
         access                     = string
         protocol                   = string
         source_port_range          = string
-        destination_port_range     = string
+        destination_port_ranges    = list(string)
         source_address_prefix      = string
         destination_address_prefix = string
       }

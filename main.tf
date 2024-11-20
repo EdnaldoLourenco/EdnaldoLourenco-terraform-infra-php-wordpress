@@ -18,6 +18,8 @@ module "vnet" {
   sub_db_cidr    = var.sub_db_cidr
   sub_files_name = var.sub_files_name
   sub_files_cidr = var.sub_files_cidr
+  sub_waf_name   = var.sub_waf_name
+  sub_waf_cidr   = var.sub_waf_cidr
   pip_name       = var.pip_name
   nic_name       = var.nic_name
   nsg_name       = var.nsg_name
@@ -58,15 +60,24 @@ module "db" {
   db_name     = var.db_name
   db_sku_size = var.db_sku_size
   db_version  = var.db_version
+  db-password = var.db-password
   depends_on  = [module.vnet, module.dns]
 }
 
-# resource "azurerm_cdn_frontdoor_profile" "frontdoor" {
-#   name                = "fd-terraform"
-#   resource_group_name = azurerm_resource_group.rg.name
-#   sku_name            = "Standard_AzureFrontDoor"
+module "appgw" {
+  source = "./modules/appgw"
 
-#   tags = {
-#     environment = "Production"
-#   }
-# }
+  rg_name                        = azurerm_resource_group.rg.name
+  rg_location                    = azurerm_resource_group.rg.location
+  appgw_name                     = var.appgw_name
+  appgw_pip_name                 = var.appgw_pip_name
+  waf-name                       = var.waf-name
+  appgw_sub_id                   = module.vnet.sub_waf_id
+  backend_pool_name              = var.backend_pool_name
+  backend_setting_name           = var.backend_setting_name
+  http_setting_name              = var.http_setting_name
+  listener_name                  = var.listener_name
+  frontend_ip_configuration_name = var.frontend_ip_configuration_name
+  frontend_port_name             = var.frontend_port_name
+  request_routing_rule_name      = var.request_routing_rule_name
+}
