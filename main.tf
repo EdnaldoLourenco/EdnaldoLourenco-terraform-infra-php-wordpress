@@ -12,12 +12,8 @@ module "vnet" {
   vnet_cidr      = var.vnet_cidr
   sub_vm_name    = var.sub_vm_name
   sub_vm_cidr    = var.sub_vm_cidr
-  sub_ilb_name   = var.sub_ilb_name
-  sub_ilb_cidr   = var.sub_ilb_cidr
   sub_db_name    = var.db_name
   sub_db_cidr    = var.sub_db_cidr
-  sub_files_name = var.sub_files_name
-  sub_files_cidr = var.sub_files_cidr
   sub_waf_name   = var.sub_waf_name
   sub_waf_cidr   = var.sub_waf_cidr
   pip_name       = var.pip_name
@@ -80,4 +76,5 @@ module "appgw" {
   frontend_ip_configuration_name = var.frontend_ip_configuration_name
   frontend_port_name             = var.frontend_port_name
   request_routing_rule_name      = var.request_routing_rule_name
+  nic_id                         = module.vnet.nic_id
 }

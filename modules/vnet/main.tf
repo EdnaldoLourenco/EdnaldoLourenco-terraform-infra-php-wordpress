@@ -12,12 +12,6 @@ resource "azurerm_subnet" "sub-vms" {
   address_prefixes     = var.sub_vm_cidr
 }
 
-resource "azurerm_subnet" "sub-ilb" {
-  name                 = var.sub_ilb_name
-  resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.vnet-terraform.name
-  address_prefixes     = var.sub_ilb_cidr
-}
 
 resource "azurerm_subnet" "sub-db" {
   name                 = var.sub_db_name
@@ -36,12 +30,6 @@ resource "azurerm_subnet" "sub-db" {
   }
 }
 
-resource "azurerm_subnet" "sub-files" {
-  name                 = var.sub_files_name
-  resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.vnet-terraform.name
-  address_prefixes     = var.sub_files_cidr
-}
 
 resource "azurerm_subnet" "sub-waf" {
   name                 = var.sub_waf_name

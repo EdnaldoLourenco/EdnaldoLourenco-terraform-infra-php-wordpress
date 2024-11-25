@@ -14,13 +14,6 @@ variable "sub_vm_cidr" {
   type = list(string)
 }
 
-variable "sub_ilb_name" {
-  type = string
-}
-
-variable "sub_ilb_cidr" {
-  type = list(string)
-}
 
 variable "sub_db_name" {
   type = string
@@ -30,13 +23,6 @@ variable "sub_db_cidr" {
   type = list(string)
 }
 
-variable "sub_files_name" {
-  type = string
-}
-
-variable "sub_files_cidr" {
-  type = list(string)
-}
 
 variable "sub_waf_name" {
   type = string

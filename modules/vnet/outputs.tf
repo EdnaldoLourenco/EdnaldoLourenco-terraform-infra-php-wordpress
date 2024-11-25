@@ -1,4 +1,4 @@
-output "public_ip" {
+output "vm_public_ip" {
   value = azurerm_public_ip.pip-terraform.ip_address
 }
 

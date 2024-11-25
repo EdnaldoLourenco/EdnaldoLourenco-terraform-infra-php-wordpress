@@ -44,3 +44,7 @@ variable "frontend_port_name" {
 variable "request_routing_rule_name" {
   type = string
 }
+
+variable "nic_id" {
+  type = string
+}

@@ -62,7 +62,6 @@ resource "azurerm_application_gateway" "appgw-terraform" {
   backend_http_settings {
     name                  = var.http_setting_name
     cookie_based_affinity = "Disabled"
-    path                  = "/path1/"
     port                  = 80
     protocol              = "Http"
     request_timeout       = 60
@@ -83,4 +82,10 @@ resource "azurerm_application_gateway" "appgw-terraform" {
     backend_address_pool_name  = var.backend_pool_name
     backend_http_settings_name = var.http_setting_name
   }
+}
+
+resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "appgw_backend" {
+  network_interface_id    = var.nic_id
+  ip_configuration_name   = "internal"
+  backend_address_pool_id = tolist(azurerm_application_gateway.appgw-terraform.backend_address_pool).0.id
 }
